@@ -1,0 +1,30 @@
+name: Build ClanPlugin
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v3
+
+      - name: Java 17 Setup
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Maven Build ausführen
+        run: mvn clean package
+
+      - name: Artifact hochladen
+        uses: actions/upload-artifact@v3
+        with:
+          name: ClanPlugin-JAR
+          path: target/ClanPlugin-1.0.jar
